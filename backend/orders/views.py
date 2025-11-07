@@ -8,6 +8,7 @@ from django.utils import timezone
 from .models import Order, OrderItem, InventoryReservation
 from catalog.models import Product
 from users.models import Address
+from .serializers import OrderSerializer,OrderItemSerializer
 
 
 # ----- USER ORDER LIST + CREATE -----
