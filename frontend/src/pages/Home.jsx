@@ -1,13 +1,13 @@
 // src/pages/Home.jsx
 import React from "react";
 import { motion } from "framer-motion";
-import { FaLeaf, FaTruck, FaGift, FaInstagram, FaFacebook, FaTwitter } from "react-icons/fa";
+import { FaLeaf, FaTruck, FaGift} from "react-icons/fa";
 
 export default function Home() {
     return (
-        <div className="bg-[#FFF9F4] text-gray-800 overflow-x-hidden">
+        <div className="text-gray-800 overflow-x-hidden">
             {/* ================= HERO SECTION ================= */}
-            <section className="relative flex flex-col md:flex-row items-center justify-between px-6 md:px-20 py-16 md:py-24">
+            <section className="relative flex flex-col md:flex-row items-center justify-between px-6 md:px-20 py-16">
                 <motion.div
                     initial={{ opacity: 0, x: -60 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -31,7 +31,7 @@ export default function Home() {
                     transition={{ duration: 0.8 }}
                     src="https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80"
                     alt="Dry fruits bowl"
-                    className="w-full md:w-1/2 rounded-3xl shadow-xl mt-10 md:mt-0"
+                    className="w-full md:w-[700px] h-[600px] rounded-3xl shadow-xl mt-10 md:mt-0"
                 />
             </section>
 
@@ -112,45 +112,6 @@ export default function Home() {
                     </button>
                 </motion.div>
             </section>
-
-            {/* ================= FOOTER ================= */}
-            <footer className="bg-[#5C2C06] text-white py-10 px-6 md:px-20">
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-                    <div>
-                        <h3 className="text-xl font-bold mb-3 text-[#C68B59]">NutriCart</h3>
-                        <p className="text-gray-300">Your go-to destination for natural and premium dry fruits.</p>
-                    </div>
-                    <div>
-                        <h3 className="font-semibold mb-3 text-[#C68B59]">Quick Links</h3>
-                        <ul className="space-y-1 text-gray-300">
-                            <li>Home</li>
-                            <li>Shop</li>
-                            <li>About</li>
-                            <li>Contact</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h3 className="font-semibold mb-3 text-[#C68B59]">Customer Service</h3>
-                        <ul className="space-y-1 text-gray-300">
-                            <li>FAQs</li>
-                            <li>Shipping Policy</li>
-                            <li>Return Policy</li>
-                            <li>Privacy Policy</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h3 className="font-semibold mb-3 text-[#C68B59]">Follow Us</h3>
-                        <div className="flex space-x-4 text-[#C68B59]">
-                            <FaInstagram size={22} />
-                            <FaFacebook size={22} />
-                            <FaTwitter size={22} />
-                        </div>
-                    </div>
-                </div>
-                <div className="mt-8 text-center text-gray-400 text-sm">
-                    © {new Date().getFullYear()} NutriCart. All rights reserved.
-                </div>
-            </footer>
         </div>
     );
 }
