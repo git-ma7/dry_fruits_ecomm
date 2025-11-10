@@ -9,7 +9,9 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Home from "./pages/Home";
 import Cart from "./pages/Cart";
+import AuthPage from "./pages/AuthPage";
 import Checkout from "./pages/Checkout";
+import ProfilePage from "./pages/ProfilePage";
 
 export default function App() {
   return (
@@ -23,7 +25,8 @@ export default function App() {
             <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="/about" element={<About/> }/>
             <Route path="/contact" element={<Contact/>} />
-            <Route path="/login" element={<div className="p-10 text-center">Login Page</div>} />
+            <Route path="/profile" element={<ProfilePage/>} />
+            <Route path="/login" element={<AuthPage/>} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout/>} />
           </Routes>
