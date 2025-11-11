@@ -3,16 +3,20 @@ import React, { useState, useEffect, useContext } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { Toaster, toast } from "react-hot-toast";
 import { CartContext } from "../context/CartContext";
 
 export default function Shop() {
   const [products, setProducts] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("All");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const { addItemToCart } = useContext(CartContext);
 
   const API_BASE_URL = import.meta.env.VITE_API_URL;
+  const handleAddToCart = (item) => {
+    addItemToCart(item, 1);
+    toast.success(`${item.name} added to cart!`, { position: "top-center", duration: 2000 });
+  }
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -31,15 +35,6 @@ export default function Shop() {
     fetchProducts();
   }, [API_BASE_URL]);
 
-  const categories = [
-    "All",
-    ...new Set(products.map((p) => p.category || "Uncategorized")),
-  ];
-
-  const filteredProducts =
-    selectedCategory === "All"
-      ? products
-      : products.filter((item) => item.category === selectedCategory);
 
   if (loading)
     return (
@@ -67,34 +62,15 @@ export default function Shop() {
         Explore Our Premium Dry Fruits
       </motion.h1>
 
-      {/* Category Filter */}
-      <div className="flex flex-wrap justify-center gap-3 mb-12">
-        {categories.map((cat) => (
-          <motion.button
-            key={cat}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => setSelectedCategory(cat)}
-            className={`px-5 py-2 rounded-full border text-sm font-medium transition-all duration-300 ${
-              selectedCategory === cat
-                ? "bg-[#C68B59] text-white border-[#C68B59]"
-                : "bg-white text-[#5C2C06] border-[#E6D5C3] hover:bg-[#FFF2E2]"
-            }`}
-          >
-            {cat}
-          </motion.button>
-        ))}
-      </div>
-
       {/* Product Grid */}
-      {filteredProducts.length === 0 ? (
+      {products.length === 0 ? (
         <p className="text-center text-gray-600">No products found.</p>
       ) : (
         <motion.div
           layout
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10"
         >
-          {filteredProducts.map((item) => (
+          {products.map((item) => (
             <motion.div
               key={item._id}
               whileHover={{ scale: 1.03 }}
@@ -132,7 +108,7 @@ export default function Shop() {
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    onClick={() => addItemToCart(item, 1)}
+                    onClick={handleAddToCart.bind(null, item)}
                     className="flex-1 bg-[#5C2C06] text-white cursor-pointer py-2 rounded-md font-medium hover:bg-[#C68B59] transition"
                   >
                     Add to Cart
@@ -152,6 +128,7 @@ export default function Shop() {
           ))}
         </motion.div>
       )}
+      <Toaster />
     </div>
   );
 }

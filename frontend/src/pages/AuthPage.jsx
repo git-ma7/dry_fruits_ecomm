@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Toaster, toast } from "react-hot-toast";
 import { FaUser, FaLock, FaEnvelope, FaPhone } from "react-icons/fa";
+
 
 // Environment-based API URL (make sure you define VITE_API_URL in your .env)
 const API_BASE_URL = import.meta.env.VITE_API_URL;
@@ -50,10 +52,23 @@ export default function AuthPage() {
         const ADMIN_EMAIL = import.meta.env.VITE_ADMIN_EMAIL;
         if (data.email === ADMIN_EMAIL) {
           setMessage("Welcome, Admin!");
-          navigate("/admin-panel");
+          setTimeout(() => {
+            navigate("/admin-panel");
+          }, 3000);
+          toast.success(
+            `Welcome back, Admin! Redirecting to Admin Panel...`,
+            { position: "top-center", duration: 2500 }
+          );
+
         } else {
           setMessage("Login successful!");
-          navigate("/");
+          setTimeout(() => {
+            navigate("/");
+          }, 3000);
+          toast.success(
+            `Welcome back, Redirecting to Home...`,
+            { position: "top-center", duration: 2500 }
+          );
         }
       } else {
         // ---- REGISTER ----
@@ -94,7 +109,7 @@ export default function AuthPage() {
         {/* LEFT SIDE */}
         <div className="w-1/2 hidden md:flex flex-col justify-center items-center p-10 bg-linear-to-br from-[#5C2C06]/90 to-[#C68B59]/80 text-white text-center">
           <h1 className="text-4xl font-bold mb-4 tracking-wide">
-            {isLogin ? "Welcome Back to NutriCart!" : "Join the NutriCart Family!"}
+            {isLogin ? "Welcome Back to Diamond Enterprises!" : "Join the Diamond Family!"}
           </h1>
           <p className="text-lg leading-relaxed text-white/90">
             {isLogin
@@ -225,6 +240,7 @@ export default function AuthPage() {
           </motion.form>
         </div>
       </motion.div>
+      <Toaster />
     </div>
   );
 }

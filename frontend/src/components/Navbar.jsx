@@ -4,38 +4,55 @@ import { Link } from "react-router-dom";
 import { FaShoppingCart, FaUser, FaBars, FaTimes } from "react-icons/fa";
 import { motion } from "framer-motion";
 
+
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
+    // const [user, setUser] = useState(null);
+    const ADMIN_EMAIL = import.meta.env.VITE_ADMIN_EMAIL;
+    // useEffect(() => {
+    //     const email = localStorage.getItem("email");
+    //     if (email === ADMIN_EMAIL) {
+    //         setUser("Admin");
+    //     } else if (email) {
+    //         setUser("customer");
+    //     }
+    // }, []);
 
     return (
         <nav className="bg-[#FFF9F4] shadow-md sticky top-0 z-50">
-            <div className="max-w-7xl mx-auto px-4 md:px-8 flex justify-between items-center h-16">
+            <div className="md:max-w-[92%] w-full px-4 mx-auto flex justify-evenly items-center h-18">
                 {/* LOGO */}
-                <Link to="/" className="text-2xl font-extrabold text-[#5C2C06]">
+                <Link to="/" className="text-2xl w-full flex gap-2 font-extrabold  text-[#5C2C06]">
                     Diamond <span className="text-[#C68B59]">Enterprises</span>
                 </Link>
 
-                {/* Desktop Links */}
-                <div className="hidden md:flex items-center gap-8">
-                    {["Home", "Shop", "About"].map((page, i) => (
-                        <Link
-                            key={i}
-                            to={page === "Home" ? "/" : `/${page.toLowerCase()}`}
-                            className="text-gray-700 hover:text-[#C68B59] font-medium transition-colors"
-                        >
-                            {page}
-                        </Link>
-                    ))}
-                </div>
+                <div className="w-full flex items-center justify-end gap-4">
+                    {/* Desktop Links */}
+                    <div className="hidden md:flex items-center gap-8">
+                        {["Home", "Shop", "About"].map((page, i) => (
+                            <Link
+                                key={i}
+                                to={page === "Home" ? "/" : `/${page.toLowerCase()}`}
+                                className="text-gray-700 hover:text-[#C68B59] font-medium transition-colors"
+                            >
+                                {page}
+                            </Link>
+                        ))}
+                        {/* {(
+                        <Link to={'/admin-panel'} className="text-gray-700 hover:text-[#C68B59] font-medium transition-colors">
+                            Admin Panel
+                        </Link>)} */}
+                    </div>
 
-                {/* Right Section */}
-                <div className="hidden md:flex items-center gap-5">
-                    <Link to="/cart" className="relative">
-                        <FaShoppingCart size={22} className="text-[#5C2C06]" />
-                    </Link>
-                    <Link to="/profile">
-                        <FaUser size={22} className="text-[#5C2C06]" />
-                    </Link>
+                    {/* Right Section */}
+                    <div className="hidden md:flex items-center justify-end gap-5">
+                        <Link to="/cart" className="relative">
+                            <FaShoppingCart size={22} className="text-[#5C2C06]" />
+                        </Link>
+                        <Link to="/profile">
+                            <FaUser size={22} className="text-[#5C2C06]" />
+                        </Link>
+                    </div>
                 </div>
 
                 {/* Mobile Menu Button */}

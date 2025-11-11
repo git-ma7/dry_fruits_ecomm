@@ -44,7 +44,7 @@ export default function Checkout() {
           email: data.email || "",
           phone: data.phone || "",
         }));
-        
+
         // Prefill address list and default address
         if (data.addresses?.length) {
           setAddresses(data.addresses);
@@ -170,11 +170,11 @@ export default function Checkout() {
           </p>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+        <div className="flex flex-col-reverse items-center md:items-start md:flex-row gap-10">
           {/* LEFT: Shipping form */}
           <form
             onSubmit={handlePlaceOrder}
-            className="bg-white/60 backdrop-blur-md rounded-2xl shadow-lg p-6"
+            className="bg-white/60 backdrop-blur-md w-full rounded-2xl shadow-lg p-6"
           >
             <h2 className="text-2xl font-semibold mb-6 border-b border-[#C68B59]/40 pb-3">
               Shipping Information
@@ -297,72 +297,71 @@ export default function Checkout() {
                 <option value="UPI">UPI</option>
               </select>
             </div>
+          </form>
+          <div className="flex flex-col w-full">
+            {/* RIGHT: Order Summary */}
+            <div className="bg-white/60 backdrop-blur-md w-full h-fit rounded-2xl shadow-lg p-6">
+              <h2 className="text-2xl font-semibold mb-6 border-b border-[#C68B59]/40 pb-3">
+                Order Summary
+              </h2>
 
+              {cartItems.length === 0 ? (
+                <div className="text-center py-10">
+                  <p className="text-lg text-[#5C2C06]/70 mb-5">
+                    Your cart is empty.
+                  </p>
+                  <Link
+                    to="/shop"
+                    className="bg-[#C68B59] text-white px-6 py-2 rounded-full hover:bg-[#5C2C06] transition"
+                  >
+                    Go to Shop
+                  </Link>
+                </div>
+              ) : (
+                <>
+                  <div className="divide-y divide-[#C68B59]/20">
+                    {cartItems.map((item) => (
+                      <div key={item._id || item.id} className="flex justify-between py-3">
+                        <div>
+                          <p className="font-medium">{item.name}</p>
+                          <p className="text-sm text-[#5C2C06]/60">
+                            Qty: {item.quantity}
+                          </p>
+                        </div>
+                        <p className="font-semibold">
+                          ₹{item.price * item.quantity}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="border-t border-[#C68B59]/30 mt-4 pt-4 space-y-2">
+                    <div className="flex justify-between">
+                      <p>Subtotal</p>
+                      <p>₹{subtotal}</p>
+                    </div>
+                    <div className="flex justify-between">
+                      <p>Delivery</p>
+                      <p>FREE SHIPPING</p>
+                    </div>
+                    <div className="flex justify-between font-semibold text-lg border-t border-[#C68B59]/30 pt-3">
+                      <p>Total</p>
+                      <p>₹{total}</p>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
             <button
-              type="submit"
+              onClick={handlePlaceOrder}
               disabled={loading}
-              className={`w-full mt-6 py-3 rounded-full font-semibold transition-all ${
-                loading
-                  ? "bg-gray-400 text-white cursor-not-allowed"
-                  : "bg-[#C68B59] text-white hover:bg-[#5C2C06]"
-              }`}
+              className={`w-full mt-6 py-3 cursor-pointer rounded-full font-semibold transition-all ${loading
+                ? "bg-gray-400 text-white cursor-not-allowed"
+                : "bg-[#C68B59] text-white hover:bg-[#5C2C06]"
+                }`}
             >
               {loading ? "Placing Order..." : "Place Order"}
             </button>
-          </form>
-
-          {/* RIGHT: Order Summary */}
-          <div className="bg-white/60 backdrop-blur-md rounded-2xl shadow-lg p-6">
-            <h2 className="text-2xl font-semibold mb-6 border-b border-[#C68B59]/40 pb-3">
-              Order Summary
-            </h2>
-
-            {cartItems.length === 0 ? (
-              <div className="text-center py-10">
-                <p className="text-lg text-[#5C2C06]/70 mb-5">
-                  Your cart is empty.
-                </p>
-                <Link
-                  to="/shop"
-                  className="bg-[#C68B59] text-white px-6 py-2 rounded-full hover:bg-[#5C2C06] transition"
-                >
-                  Go to Shop
-                </Link>
-              </div>
-            ) : (
-              <>
-                <div className="divide-y divide-[#C68B59]/20">
-                  {cartItems.map((item) => (
-                    <div key={item._id || item.id} className="flex justify-between py-3">
-                      <div>
-                        <p className="font-medium">{item.name}</p>
-                        <p className="text-sm text-[#5C2C06]/60">
-                          Qty: {item.quantity}
-                        </p>
-                      </div>
-                      <p className="font-semibold">
-                        ₹{item.price * item.quantity}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="border-t border-[#C68B59]/30 mt-4 pt-4 space-y-2">
-                  <div className="flex justify-between">
-                    <p>Subtotal</p>
-                    <p>₹{subtotal}</p>
-                  </div>
-                  <div className="flex justify-between">
-                    <p>Delivery</p>
-                    <p>FREE SHIPPING</p>
-                  </div>
-                  <div className="flex justify-between font-semibold text-lg border-t border-[#C68B59]/30 pt-3">
-                    <p>Total</p>
-                    <p>₹{total}</p>
-                  </div>
-                </div>
-              </>
-            )}
           </div>
         </div>
       </div>

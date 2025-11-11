@@ -30,9 +30,9 @@ export default function Home() {
                     initial={{ opacity: 0, x: 80 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.8 }}
-                    src="https://www.freepik.com/free-photos-vectors/dry-fruits/"
+                    src="https://res.cloudinary.com/dqlw6w5nh/image/upload/v1762855773/HeroPage_y9io12.jpg"
                     alt="Dry fruits bowl"
-                    className="w-full md:w-[700px] h-[600px] rounded-3xl shadow-xl mt-10 md:mt-0"
+                    className="w-full md:w-[700px] md:h-[600px] rounded-3xl shadow-xl mt-10 md:mt-0"
                 />
             </section>
         </div>

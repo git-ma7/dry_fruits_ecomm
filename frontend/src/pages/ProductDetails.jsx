@@ -2,7 +2,8 @@ import React, { useState, useContext, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useParams, useNavigate } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
-import { ShoppingCart, ArrowLeft } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
+import { Toaster, toast } from "react-hot-toast";
 import axios from "axios";
 
 export default function ProductDetails() {
@@ -41,7 +42,7 @@ export default function ProductDetails() {
   const handleAddToCart = () => {
     if (!product) return;
     addItemToCart(product, quantity);
-    alert(`${quantity} item(s) added to cart`);
+    toast.success(`${product.name} (x${quantity}) added to cart!`, { position: "top-center", duration: 2000 });
   };
 
   if (loading) return <p className="text-center mt-20">Loading product...</p>;
@@ -50,12 +51,6 @@ export default function ProductDetails() {
 
   return (
     <div className="pt-24 pb-10 px-4 md:px-10 bg-[#FFF9F4] min-h-screen">
-      <button
-        onClick={() => navigate(-1)}
-        className="flex items-center gap-2 mb-6 text-[#5C2C06] font-medium hover:text-[#C68B59]"
-      >
-        <ArrowLeft /> Back to Shop
-      </button>
 
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 items-start">
         {/* Left: Image */}
@@ -114,6 +109,7 @@ export default function ProductDetails() {
           </motion.button>
         </motion.div>
       </div>
+      <Toaster />
     </div>
   );
 }
