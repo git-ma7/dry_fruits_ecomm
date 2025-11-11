@@ -12,12 +12,12 @@ export default function Navbar() {
             <div className="max-w-7xl mx-auto px-4 md:px-8 flex justify-between items-center h-16">
                 {/* LOGO */}
                 <Link to="/" className="text-2xl font-extrabold text-[#5C2C06]">
-                    Nutri<span className="text-[#C68B59]">Cart</span>
+                    Diamond <span className="text-[#C68B59]">Enterprises</span>
                 </Link>
 
                 {/* Desktop Links */}
                 <div className="hidden md:flex items-center gap-8">
-                    {["Home", "Shop", "About", "Contact"].map((page, i) => (
+                    {["Home", "Shop", "About"].map((page, i) => (
                         <Link
                             key={i}
                             to={page === "Home" ? "/" : `/${page.toLowerCase()}`}
@@ -33,7 +33,7 @@ export default function Navbar() {
                     <Link to="/cart" className="relative">
                         <FaShoppingCart size={22} className="text-[#5C2C06]" />
                     </Link>
-                    <Link to="/login">
+                    <Link to="/profile">
                         <FaUser size={22} className="text-[#5C2C06]" />
                     </Link>
                 </div>
@@ -54,7 +54,7 @@ export default function Navbar() {
                     animate={{ opacity: 1, y: 0 }}
                     className="md:hidden bg-[#FFF9F4] shadow-lg border-t border-[#E6D5C3] flex flex-col items-center py-4 space-y-4"
                 >
-                    {["Home", "Shop", "About", "Contact"].map((page, i) => (
+                    {["Home", "Shop", "About"].map((page, i) => (
                         <Link
                             key={i}
                             to={page === "Home" ? "/" : `/${page.toLowerCase()}`}
@@ -68,7 +68,7 @@ export default function Navbar() {
                         <Link to="/cart" className="text-[#5C2C06]">
                             <FaShoppingCart size={22} />
                         </Link>
-                        <Link to="/login" className="text-[#5C2C06]">
+                        <Link to="/profile" className="text-[#5C2C06]">
                             <FaUser size={22} />
                         </Link>
                     </div>

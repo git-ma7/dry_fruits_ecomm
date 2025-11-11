@@ -1,43 +1,53 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
-const addressSchema = new mongoose.Schema(
-  {
-    line1: { type: String, required: true },
-    line2: { type: String },
-    city: { type: String, required: true },
-    state: { type: String, required: true },
-    postalCode: { type: String, required: true },
-    country: { type: String, required: true },
-    isDefault: { type: Boolean, default: false },
-  },
-  { timestamps: true }
-);
-
 const userSchema = new mongoose.Schema(
   {
-    firstName: { type: String },
-    lastName: { type: String },
-    email: { type: String, required: true, unique: true, lowercase: true },
-    password: { type: String, required: true },
-    phone: { type: String },
-    addresses: [addressSchema],
+    firstName: { type: String, required: true, trim: true },
+    lastName: { type: String, trim: true },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+      trim: true,
+    },
+    password: { type: String, required: true, minlength: 6 },
+    phone: { type: String, trim: true },
+    isAdmin: { type: Boolean, default: false },
+
+    // ✅ store address references, not embedded documents
+    addresses: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Address",
+      },
+    ],
   },
   { timestamps: true }
 );
 
-// Password hashing before saving
+// 🔐 Password hashing
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
-  next();
+  try {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
+  } catch (err) {
+    next(err);
+  }
 });
 
-// Password comparison
+// 🔑 Password comparison
 userSchema.methods.matchPassword = async function (enteredPassword) {
-  return await bcrypt.compare(enteredPassword, this.password);
+  return bcrypt.compare(enteredPassword, this.password);
 };
+
+// 🧍 Virtual full name
+userSchema.virtual("fullName").get(function () {
+  return `${this.firstName || ""} ${this.lastName || ""}`.trim();
+});
 
 const User = mongoose.model("User", userSchema);
 export default User;

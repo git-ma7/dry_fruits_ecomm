@@ -6,40 +6,44 @@ import cors from "cors";
 import userRoutes from "./routes/userRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
+import addressRoutes from "./routes/addressRoutes.js";
 
 dotenv.config();
-
 const app = express();
 
-// --- Middleware ---
-app.use(express.json());
+// --- Environment variables ---
+const PORT = process.env.PORT || 5000;
+const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN || "http://localhost:5173";
 
-// --- CORS CONFIGURATION ---
+const allowedOrigins = ["http://localhost:5173", FRONTEND_ORIGIN];
+
+// --- CORS CONFIGURATION (must come before routes) ---
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173/",   // Vite dev server
-      "http://localhost:3000/",   // CRA dev server
-      "https://yourfrontenddomain.com/", // future deployed frontend,
-      "http://10.24.81.97:5173/" // VS Code Live Share
-    ],
+    origin: allowedOrigins,
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
+// --- Parse JSON body ---
+app.use(express.json());
+
 // --- MongoDB Connection ---
 mongoose
-  .connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log("✅ MongoDB connected"))
-  .catch((err) => console.error("❌ MongoDB connection error:", err.message));
+.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => console.log("✅ MongoDB connected"))
+.catch((err) => console.error("❌ MongoDB connection error:", err.message));
 
 // --- Routes ---
 app.use("/api/users", userRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/addresses", addressRoutes);
 
 // --- Health check route ---
 app.get("/", (req, res) => {
@@ -50,7 +54,7 @@ app.get("/", (req, res) => {
 app.use((req, res) => res.status(404).json({ message: "Not Found" }));
 
 // --- Server Start ---
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () =>
-  console.log(`🚀 Server running in ${process.env.NODE_ENV || "development"} mode on port ${PORT}`)
-);
+app.listen(PORT, "0.0.0.0" , () => {
+  console.log(`🚀 Server running in ${process.env.NODE_ENV || "development"} mode on port ${PORT}`);
+  console.log(`✅ Allowed origins: [${FRONTEND_ORIGIN}]`);
+});

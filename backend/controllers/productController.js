@@ -1,7 +1,7 @@
 import Product from "../models/productModel.js";
 
-// @desc    Get all products
-// @route   GET /api/products
+// @desc Get all products
+// @route GET /api/products
 export const getProducts = async (req, res) => {
   try {
     const products = await Product.find();
@@ -11,8 +11,8 @@ export const getProducts = async (req, res) => {
   }
 };
 
-// @desc    Get product by ID
-// @route   GET /api/products/:id
+// @desc Get product by ID
+// @route GET /api/products/:id
 export const getProductById = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
@@ -23,20 +23,28 @@ export const getProductById = async (req, res) => {
   }
 };
 
-// @desc    Create product (Admin)
-// @route   POST /api/products
+// @desc Create product (Admin only)
+// @route POST /api/products
 export const createProduct = async (req, res) => {
   try {
     const { name, description, price, stock, sku, status, images } = req.body;
-    const product = await Product.create({ name, description, price, stock, sku, status, images });
+    const product = await Product.create({
+      name,
+      description,
+      price,
+      stock,
+      sku,
+      status,
+      images,
+    });
     res.status(201).json(product);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
-// @desc    Update product
-// @route   PUT /api/products/:id
+// @desc Update product (Admin only)
+// @route PUT /api/products/:id
 export const updateProduct = async (req, res) => {
   try {
     const product = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -47,8 +55,8 @@ export const updateProduct = async (req, res) => {
   }
 };
 
-// @desc    Delete product
-// @route   DELETE /api/products/:id
+// @desc Delete product (Admin only)
+// @route DELETE /api/products/:id
 export const deleteProduct = async (req, res) => {
   try {
     const product = await Product.findByIdAndDelete(req.params.id);

@@ -21,8 +21,8 @@ export default function About() {
                 className="max-w-5xl mx-auto bg-white border border-[#E6D5C3] rounded-2xl shadow-xl p-10 md:p-14"
             >
                 <p className="text-gray-700 text-justify leading-relaxed mb-8">
-                    Welcome to <span className="font-semibold text-[#5C2C06]">Nutridry</span>, your one-stop destination
-                    for premium quality dry fruits sourced from the best farms across the globe.
+                    Welcome to <span className="font-semibold text-[#5C2C06]">Diamond Enterprises</span>, your one-stop destination
+                    for premium quality dry fruits sourced from the best farms.
                     Our passion lies in delivering health, taste, and purity to your doorstep.
                     With a perfect blend of traditional goodness and modern packaging,
                     we ensure that every bite is wholesome, delicious, and filled with nutrients.

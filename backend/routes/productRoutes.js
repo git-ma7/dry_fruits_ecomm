@@ -1,18 +1,22 @@
 import express from "express";
-import { protect } from '../middleware/authMiddleware.js';
-import {getProducts,
+import {
+  getProducts,
   getProductById,
   createProduct,
   updateProduct,
   deleteProduct,
 } from "../controllers/productController.js";
+import { protect, adminOnly } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
+// Public routes
 router.get("/", getProducts);
 router.get("/:id", getProductById);
-router.post("/", protect ,createProduct);      // you can later wrap with admin middleware
-router.put("/:id", protect ,updateProduct);
-router.delete("/:id", protect ,deleteProduct);
+
+// Admin routes
+router.post("/", protect, adminOnly, createProduct);
+router.put("/:id", protect, adminOnly, updateProduct);
+router.delete("/:id", protect, adminOnly, deleteProduct);
 
 export default router;

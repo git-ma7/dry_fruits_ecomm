@@ -12,6 +12,8 @@ import Cart from "./pages/Cart";
 import AuthPage from "./pages/AuthPage";
 import Checkout from "./pages/Checkout";
 import ProfilePage from "./pages/ProfilePage";
+import AdminPanel from "./pages/AdminPanel";
+import ProtectedRoute from "./components/protectedRoute";
 
 export default function App() {
   return (
@@ -21,14 +23,47 @@ export default function App() {
         <main className="grow bg-[#FFF9F4]">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/shop" element={<Shop/>} />
+            <Route path="/shop" element={<Shop />} />
             <Route path="/product/:id" element={<ProductDetails />} />
-            <Route path="/about" element={<About/> }/>
-            <Route path="/contact" element={<Contact/>} />
-            <Route path="/profile" element={<ProfilePage/>} />
-            <Route path="/login" element={<AuthPage/>} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/checkout" element={<Checkout/>} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/login" element={<AuthPage />} />
+
+            {/* Protected user routes */}
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <ProfilePage />
+                </ProtectedRoute> 
+              }
+            />
+            <Route
+              path="/cart"
+              element={
+                <ProtectedRoute>
+                  <Cart />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/checkout"
+              element={
+                <ProtectedRoute>
+                  <Checkout />
+                </ProtectedRoute>
+              }
+            />
+
+            {/* ✅ Admin-only route */}
+            <Route
+              path="/admin-panel"
+              element={
+                <ProtectedRoute adminOnly={true}>
+                  <AdminPanel />
+                </ProtectedRoute>
+              }
+            />
           </Routes>
         </main>
         <Footer />
